@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 var dotenv = require('dotenv');
 
-dotenv.config();
+try {
+  dotenv.config();
+} catch (err) {
+}
 
 var index = require('./routes/index');
 var users = require('./routes/users');
