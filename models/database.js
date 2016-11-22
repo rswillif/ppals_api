@@ -11,7 +11,7 @@ client.connect();
 
 var queryOne = client.query('CREATE TABLE teams(id SERIAL PRIMARY KEY, image BYTEA, title TEXT not null, body TEXT not null)');
 var queryTwo = client.query('CREATE TABLE posts(id SERIAL PRIMARY KEY, date TIMESTAMP, title TEXT not null, body TEXT not null)');
-var queryThree = client.query('CREATE TABLE schools(id SERIAL PRIMARY KEY, date TIMESTAMP, name TEXT not null)');
+var queryThree = client.query('CREATE TABLE schools(id SERIAL PRIMARY KEY, date TIMESTAMP, name TEXT not null, city TEXT not null, state TEXT not null, county TEXT not null)');
 var queryFour = client.query('CREATE TABLE admins(id SERIAL PRIMARY KEY, tokens TEXT)');
 
 queryOne.on('end', tryEndClient);
