@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var appHelpers = require('../helpers/app-helpers');
 
+/* GET admin dashboard. */
+router.get('/', function(req, res, next) {
+  res.send('You are accessing the admin dashboard.');
+});
+
 router.post('/teams', (req, res, next) => {
   if (!appHelpers.isAdmin(req.body.password)) {
     res.status(401).end();
@@ -36,15 +41,5 @@ router.post('/teams', (req, res, next) => {
     client.end();
   });
 });
-
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('You are accessing the admin dashboard.');
-// });
-//
-// /* GET all posts. */
-// router.get('/posts', (req, res, next) => {
-//
-// });
 
 module.exports = router;

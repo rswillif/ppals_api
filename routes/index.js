@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var indexHelpers = require('../helpers/index-helpers');
+var appHelpers = require('../helpers/app-helpers');
 
 var google = require('googleapis');
 var calendar = google.calendar('v3');
@@ -24,7 +25,9 @@ var url = oauth2Client.generateAuthUrl({
 });
 var upcomingEvents = {};
 
-indexHelpers.getAdminTokens();
+indexHelpers.getAdminTokens(function(tokens) {
+  oauth2Client.credentials = tokens;
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,7 +52,7 @@ router.get('/auth', function(req, res, next) {
 });
 
 /* GET supersecretadmin token password thing and attempt validation */
-router.get('/test', function(req, res, next) {
+router.get('/events', function(req, res, next) {
   if (appHelpers.isAdmin(req.query.password)) {
     // Fetch calendar events
       calendar.events.list({

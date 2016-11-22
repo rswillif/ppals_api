@@ -1,11 +1,11 @@
 var appHelpers = require('../helpers/app-helpers');
 
-function getAdminTokens() {
+function getAdminTokens(callback) {
   var client = appHelpers.getConnectedClient();
 
   var query = client.query('SELECT tokens FROM admins WHERE id=1', function (err, result) {
     if (!err && result.rowCount === 1) {
-      oauth2Client.credentials = JSON.parse(result.rows[0].tokens);
+      callback(JSON.parse(result.rows[0].tokens));
     }
   });
 
