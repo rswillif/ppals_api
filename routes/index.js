@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
 var indexHelpers = require('../helpers/index-helpers');
-var connectionString = process.env.DATABASE_URL;
 
 var google = require('googleapis');
 var calendar = google.calendar('v3');
