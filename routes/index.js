@@ -46,8 +46,15 @@ router.get('/auth', function(req, res, next) {
     indexHelpers.updateAdminTokens(tokens);
 
     oauth2Client.credentials = tokens
-
-    res.redirect('/admin');
+    // if (process.env.NODE_ENV === 'development') {
+    //   res.redirect('/admin');
+    // }
+    if (process.env.NODE_ENV === 'production') {
+      res.redirect('https://ppalsapi.herokuapp.com/admin');
+    } else {
+      res.redirect('/admin');
+    }
+    // res.redirect('/admin');
   })
 });
 
