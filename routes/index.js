@@ -23,7 +23,6 @@ var url = oauth2Client.generateAuthUrl({
   // If you only need one scope you can pass it as string
   scope: scopes
 });
-var upcomingEvents = {};
 
 indexHelpers.getAdminTokens(function(tokens) {
   oauth2Client.credentials = tokens;
@@ -60,6 +59,7 @@ router.get('/auth', function(req, res, next) {
 
 /* GET supersecretadmin token password thing and attempt validation */
 router.get('/events', function(req, res, next) {
+  var upcomingEvents = {};
   if (appHelpers.isAdmin(req.query.password)) {
     // Fetch calendar events
       calendar.events.list({
