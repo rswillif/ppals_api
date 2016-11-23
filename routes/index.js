@@ -59,7 +59,7 @@ router.get('/auth', function(req, res, next) {
 
 /* GET supersecretadmin token password thing and attempt validation */
 router.get('/events', function(req, res, next) {
-  var upcomingEvents = {};
+  var upcomingEvents = [];
   if (appHelpers.isAdmin(req.query.password)) {
     // Fetch calendar events
       calendar.events.list({
@@ -72,7 +72,7 @@ router.get('/events', function(req, res, next) {
       }, function(err, response) {
         if (err) {
           console.log('The API returned an error: ' + err);
-          res.status(401).json('The API returned an error: ' + err)
+          res.status(401).json('The API returned an error: ' + err);
           return;
         }
         var events = response.items;
@@ -85,13 +85,13 @@ router.get('/events', function(req, res, next) {
             var start = event.start.dateTime || event.start.date;
             var desired = { when: start, where: event.location, description: event.summary }
             console.log('%s - %s', start, event.summary);
-            upcomingEvents[event.summary] = desired
+            upcomingEvents[i] = desired;
           }
           res.json(upcomingEvents)
         }
       });
   } else {
-    res.status(401).json("Invalid password!")
+    res.status(401).json("Invalid password!");
   }
 });
 
