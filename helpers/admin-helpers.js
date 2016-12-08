@@ -5,6 +5,7 @@ function sortUpdates(posts, events) {
     dateTwo = new Date(b.date);
     return dateOne > dateTwo ? -1 : dateOne < dateTwo ? 1 : 0;
   });
+  return results;
 }
 
 module.exports = {
