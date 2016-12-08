@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 var appHelpers = require('../helpers/app-helpers');
 
-// TODO: implement /teams
-// TODO: implement /teams/:id
-
+/* Gets and returns the rendered picture for a team */
 router.get('/:id/image', (req, res, next) => {
   var id = req.params.id;
 
@@ -28,6 +26,7 @@ router.get('/:id/image', (req, res, next) => {
   });
 });
 
+/* Gets and returns all teams */
 router.get('/', (req, res, next) => {
   var results = [];
   var id = req.query.id;
@@ -36,34 +35,42 @@ router.get('/', (req, res, next) => {
 
   query = client.query("SELECT id,title,body FROM teams;");
 
-  // SQL Query > Select Data
-  // if (id === "all") {
-  //   query = client.query("SELECT title,body FROM teams;");
-  // }
-  // query = client.query({
-  //   text: "SELECT title,body FROM teams WHERE id = $1;",
-  //   values: [id]
-  // });
   // Stream results back one row at a time
   query.on('row', (row) => {
     results.push(row);
   });
+
   // After all data is returned, close connection and return results
   query.on('end', () => {
     return res.json(results);
     client.end();
   });
-    // res.json()
-    // var id = result.rows[0].id;
-    //
-    // res.json({
-    //   id: id,
-    //   name: req.query.title,
-    //   description: req.query.body
-    // });
-  // query.on('end', () => {
-  //   client.end();
-  // });
+});
+
+/* Get a team by id */
+router.get('/:id', (req, res, next) => {
+  var results = [];
+  var id = req.params.id;
+  var client = appHelpers.getConnectedClient();
+  var query = null;
+
+  query = client.query({
+    text: "SELECT id,title,body FROM teams WHERE id = $1;"
+    values: [id]
+  }, function (err, result) {
+    res.status(401).json('Team with desired id DNE or is invalid.');
+  });
+
+  // Stream results at selected row back to results variable
+  query.on('row', (row) => {
+    results.push(row);
+  });
+
+  // After data is returned from db and assigned, close connection and return results
+  query.on('end', () => {
+    return res.json(results);
+    client.end();
+  });
 });
 
 module.exports = router;
