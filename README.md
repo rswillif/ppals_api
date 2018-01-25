@@ -22,4 +22,4 @@
 
 DISCLAIMER
 
-``This project was created in a week's time with no prior knowledge of node or express or google oauth to intentionally as part of a coding challenge``
+``This project was created in a week's time with no prior knowledge of node or express or google oauth intentionally as part of a coding challenge``
